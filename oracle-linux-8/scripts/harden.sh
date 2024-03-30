@@ -24,7 +24,7 @@ export GIT_SSL_NO_VERIFY=true
 
 
 #gtocis # leave on develop always
-git clone --depth 1 -b develop https://packer:glpat-DWEbxB8_8-1ZJvkZz1ze@gitlab.css.cgipdc.cginet/unix-iac/cis-gto-rhel.git
+git clone --depth 1 -b develop 
 
 
 #cd ron_rhel8-cis || exit
