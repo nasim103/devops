@@ -2,8 +2,7 @@
  
 export GIT_SSL_NO_VERIFY=true
 
-git clone --depth 1 -b main https://packer:glpat-n8Zzemf47PV5Zx_Ag1o1@gitlab.css.cgipdc.cginet/unix-iac/aux/ad_realm_auth.git
-
+git clone --depth 1 -b main 
 cd ad_realm_auth || exit
 
 which python3
