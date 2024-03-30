@@ -1,0 +1,56 @@
+[cgiadmin@phx-downstream4-feature-worker1  (10.126.66.48/20)   ~]$ sudo showmount -e 10.126.79.254
+Export list for 10.126.79.254:
+/Rancher_Dev_Downstream           
+10.126.8.11,
+10.126.9.11,
+10.126.10.11,
+10.126.32.0/21,
+10.126.64.0/21,
+10.126.40.0/22,
+10.126.44.0/23,
+10.126.72.0/23,
+10.126.76.0/23,
+10.126.46.0/24,
+10.126.75.0/24,
+10.126.78.0/24,
+10.126.74.128/25,
+10.126.74.80/28,
+10.126.74.96/28,
+10.126.74.112/28,
+10.126.74.76/30,
+10.126.74.74/31
+/Rancher_West_External_Downstream 10.127.64.5,10.127.64.6,10.127.64.7,10.127.64.8,10.127.64.9,10.127.64.10
+/Rancher_West_Internal_Downstream 10.127.32.5,10.127.32.6,10.127.32.7,10.127.32.8,10.127.32.9,10.127.32.10
+
+
+
+[cgiadmin@phx-downstream4-feature-worker1 ~]$ sudo rpcinfo 10.126.79.254
+   program version netid     address                service    owner
+    100003    3    TCP       10.126.8.253.8.1       nfs        
+    100003    2    TCP       10.126.8.253.8.1       nfs        
+    100005    3    TCP       10.126.8.253.15.208    mountd     
+    100005    1    TCP       10.126.8.253.15.208    mountd     
+    100005    3    UDP       10.126.8.253.15.208    mountd     
+    100005    1    UDP       10.126.8.253.15.208    mountd     
+    100021    4    TCP       10.126.8.253.15.205    nlockmgr   
+    100021    1    TCP       10.126.8.253.15.205    nlockmgr   
+    100021    3    TCP       10.126.8.253.15.205    nlockmgr   
+    100021    4    UDP       10.126.8.253.15.205    nlockmgr   
+    100021    1    UDP       10.126.8.253.15.205    nlockmgr   
+    100021    3    UDP       10.126.8.253.15.205    nlockmgr   
+    100024    1    TCP       10.126.8.253.15.210    status     
+    100024    1    UDP       10.126.8.253.15.210    status     
+    100011    2    TCP       10.126.8.253.2.250     rquotad    
+    100011    1    TCP       10.126.8.253.2.250     rquotad    
+    100011    2    UDP       10.126.8.253.2.250     rquotad    
+    100011    1    UDP       10.126.8.253.2.250     rquotad    
+    100000    3    TCP       10.126.8.253.0.111     portmapper 
+    100000    2    TCP       10.126.8.253.0.111     portmapper 
+    100000    3    UDP       10.126.8.253.0.111     portmapper 
+    100000    2    UDP       10.126.8.253.0.111     portmapper 
+    334741    3    TCP       10.126.8.253.135.181   -          
+    334741    3    UDP       10.126.8.253.135.181   - 
+
+
+    [cgiadmin@phx-downstream4-feature-worker1 ~]$ sudo mount -t nfs -o nolock,vers=3 10.126.79.254:Rancher_Dev_Downstream /testing
+mount.nfs: mounting 10.126.79.254:Rancher_Dev_Downstream failed, reason given by server: No such file or directory

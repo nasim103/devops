@@ -1,0 +1,129 @@
+---                                                                                                                                                                                                         
+# the playbook sets up ad auth 
+- hosts: all
+  become_user: root
+  become_method: sudo
+  become: yes
+  gather_facts: no    
+  #remote_user: ansible
+  vars: 
+    user: cgiadmin
+
+  tasks:
+### leave the CTSS Domain  ###
+    - name: leave CSS Domain
+      shell: "echo 'Oph0Du4On7Haf9Ve1Jo6Ry0' | realm leave --remove --user=svc_adjoin css.cgipdc.cginet || true"
+      tags: leave-domain
+
+### Add VM to CTSS Domain  ###    
+    - name: Join CSS Domain
+      shell: "echo 'Oph0Du4On7Haf9Ve1Jo6Ry0' | realm join --user=svc_adjoin --computer-ou='OU=IaC,OU=Unix,OU=Tier 1,OU=Staff,OU=MGMT,DC=css,DC=cgipdc,DC=cginet' css.cgipdc.cginet"
+      tags: join-domain
+
+### Add users & groups access   ### 
+    - name: Add users & groups access
+      shell: |
+       realm permit -g CSS-Unix@CSS.CGIPDC.CGINET
+       realm permit -g CSS-USIS-Security@CSS.CGIPDC.CGINET
+       realm permit -g CSS-Patching@CSS.CGIPDC.CGINET
+       realm permit svc_sailpoint@CSS.CGIPDC.CGINET
+       realm permit svc_unixiac@CSS.CGIPDC.CGINET
+       realm permit svc_rapid7@CSS.CGIPDC.CGINET
+       realm permit svc_forescout@CSS.CGIPDC.CGINET
+       realm permit svc_rundeck@CSS.CGIPDC.CGINET
+      tags: add-users-domain
+
+### setup  sudoersd  ### 
+    - name: Add users & groups access sudoersd
+      shell: |
+       touch /etc/sudoers.d/security
+       touch /etc/sudoers.d/patching
+       touch /etc/sudoers.d/backup
+       touch /etc/sudoers.d/operations
+       touch /etc/sudoers.d/unix
+       touch /etc/sudoers.d/dba
+       touch /etc/sudoers.d/svc_accounts
+       touch /etc/sudoers.d/cis
+      tags: setup-sudoersd
+
+### setup and configure sudoers  ### 
+    - name: Add users & groups access
+      shell: |
+       echo 'svc_rundeck ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/svc_accounts
+       echo 'svc_unixiac ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/svc_accounts
+       echo 'svc_forescout ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/svc_accounts
+       echo 'svc_rapid7 ALL=(root) /usr/bin/bash' >> /etc/sudoers.d/svc_accounts
+       echo 'svc_sailpoint ALL=(ALL) ALL' >> /etc/sudoers.d/svc_accounts
+       echo "svc_unixiac ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/svc_accounts
+       echo "%CSS-Unix ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/unix
+       echo "%CSS-USIS-Security ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/security
+       echo "%CSS-Patching ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/patching
+      tags: setup-sudoers
+
+### cis hardening sudo logging  ### 
+    - name: Add users & groups access
+      shell: |
+       echo "Defaults use_pty" > /etc/sudoers.d/cis
+       echo "Defaults logfile="/var/log/sudo.log"" > /etc/sudoers.d/cis
+      tags: cis-hardening-sudo-logging
+
+### allow login without needing @domain   ### 
+    - name: Allow login without needing @domain 
+      shell: |
+       sed -i '/nss,/a default_domain_suffix = CSS.CGIPDC.CGINET' /etc/sssd/sssd.conf
+      tags: add-short-domain-login
+
+### set fallback homedir   ### 
+    - name: set fallback homedir
+      shell: |
+       sed -i 's/%u@%d/%u/g' /etc/sssd/sssd.conf
+      tags: set fallback homedir
+
+### overide ldap user group with local group   ### 
+    - name: Overide ldap user group with local group
+      shell: |
+       sed -i '$a\auto_private_groups = true' /etc/sssd/sssd.conf
+      tags: set  full name format
+
+### set  full name format sssd   ### 
+    - name: set  full name format sssd
+      shell: |
+       sed -i '$a\full_name_format = %1$s' /etc/sssd/sssd.conf
+      tags: auto-private-groups
+
+### set ad cred cache to 48 hours   ### ssssssss
+    - name: set ad cred cache to 48 hours
+      shell: |
+       sed -i '$a\account_cache_expiration = 2' /etc/sssd/sssd.conf
+      tags: set ad cred cache to 48 hours
+
+### set pam cache to 48 hours   ### 
+    - name: set pam cache to 48 hours 
+      shell: |
+       sed -i '$a\\n[pam]\n offline_credentials_expiration = 2' /etc/sssd/sssd.conf
+      tags: set pam cache to 48 hours 
+
+### sshd crypto policy change   ### 
+    - name: set sshd crypto policy change 
+      shell: |
+       sed -i '$a\CRYPTO_POLICY=' /etc/sysconfig/sshd
+      tags: sshd crypto policy change 
+
+### flush sssd db  ###
+    - name: Flush sssd db 
+      shell: |
+        rm -rf /var/lib/sss/db/*
+      tags: flush-sssd-db
+
+### Restart sssd services  ###
+    - name: Restart sssd services
+      shell: |
+        systemctl reset-failed
+        service sssd restart
+      tags: restart-sssd
+
+### Restart sshd services  ###
+    - name: Restart sshd services
+      shell: |
+        service sshd restart
+      tags: restart-sshd
