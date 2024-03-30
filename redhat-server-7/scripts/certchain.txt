@@ -1,0 +1,77 @@
+docker pull harbor-feature.mipc.css.cgipdc.cginet/rancher/rancher:v2.4.8
+{
+  "insecure-registries": [
+    "harbor.shr.west.mipc.css.cgipdc.cginet", "harbor.shr.east.mipc.css.cgipdc.cginet", "harbor.mipc.css.cgipdc.cginet", "harbor-dev.mipc.css.cgipdc.cginet", "harbor-feature.mipc.css.cgipdc.cginet", "10.126.9.9", "10.126.10.9"
+  ]
+}
+  harbor_user         = "username"
+  harbor_password     = "password"
+
+harbor.shr.dev.mipc.css.cgipdc.cginet
+harbor-dev.shr.dev.mipc.css.cgipdc.cginet
+harbor-feature.shr.dev.mipc.css.cgipdc.cginet
+
+consul1.shr.dev.mipc.cgipdc.cginet
+consul2.shr.dev.mipc.cgipdc.cginet
+consul3.shr.dev.mipc.cgipdc.cginet
+jenkins.shr.dev.mipc.css.cgipdc.cginet
+mgmt-jenkins.shr.dev.mipc.css.cgipdc.cginet
+consul1-dev.shr.dev.mipc.cgipdc.cginet
+consul2-dev.shr.dev.mipc.cgipdc.cginet
+consul3-dev.shr.dev.mipc.cgipdc.cginet
+jenkins-dev.shr.dev.mipc.css.cgipdc.cginet
+mgmt-jenkins-dev.shr.dev.mipc.css.cgipdc.cginet
+consul1-feature.shr.dev.mipc.cgipdc.cginet
+consul2-feature.shr.dev.mipc.cgipdc.cginet
+consul3-feature.shr.dev.mipc.cgipdc.cginet
+jenkins-feature.shr.dev.mipc.css.cgipdc.cginet
+mgmt-jenkins-feature.shr.dev.mipc.css.cgipdc.cginet
+ranchrke1.int.dev.mipc.css.cgipdc.cginet
+ranchrke2.int.dev.mipc.css.cgipdc.cginet
+ranchrke3.int.dev.mipc.css.cgipdc.cginet
+ranchrke1.ext.dev.mipc.css.cgipdc.cginet
+ranchrke2.ext.dev.mipc.css.cgipdc.cginet
+ranchrke3.ext.dev.mipc.css.cgipdc.cginet
+opsman.int.dev.mipc.css.cgipdc.cginet
+pksapi.int.dev.mipc.css.cgipdc.cginet
+pksapi.ext.dev.mipc.css.cgipdc.cginet
+opsman.ext.dev.mipc.css.cgipdc.cginet
+ranchrke1-feature.ext.dev.mipc.css.cgipdc.cginet
+ranchrke2-feature.ext.dev.mipc.css.cgipdc.cginet
+ranchrke3-feature.ext.dev.mipc.css.cgipdc.cginet
+opsman-feat-int-dev.mipc.css.cgipdc.cginet
+pksapi-feat-int-dev.mipc.css.cgipdc.cginet
+ranchrke1-1-dev.int.dev.mipc.css.cgipdc.cginet
+ranchrke1-2-dev.int.dev.mipc.css.cgipdc.cginet
+ranchrke1-3-dev.int.dev.mipc.css.cgipdc.cginet
+ranchrke2-1-dev.int.dev.mipc.css.cgipdc.cginet
+ranchrke2-2-dev.int.dev.mipc.css.cgipdc.cginet
+ranchrke2-3-dev.int.dev.mipc.css.cgipdc.cginet
+ranchrke1-1-dev.ext.dev.mipc.css.cgipdc.cginet
+ranchrke1-2-dev.ext.dev.mipc.css.cgipdc.cginet
+ranchrke1-3-dev.ext.dev.mipc.css.cgipdc.cginet
+ranchrke2-2-dev.ext.dev.mipc.css.cgipdc.cginet
+ranchrke2-3-dev.ext.dev.mipc.css.cgipdc.cginet
+pksapi-dev-ext-dev.mipc.css.cgipdc.cginet
+opsman-dev-ext-dev.mipc.css.cgipdc.cginet
+bosch.shr.dev.mipc.css.cgipdc.cginet
+concourse-dev.mipc.css.cgpdc.cginet
+opsman-int-dev.mipc.css.cgipdc.cginet
+bosch.int.dev.mipc.css.cgipdc.cginet
+pksapi-int-dev.mipc.css.cgipdc.cginet
+bosch.ext.dev.mipc.css.cgipdc.cginet
+pksapi-ext-dev.mipc.css.cgipdc.cginet
+opsman-ext-dev.mipc.css.cgipdc.cginet
+ranchrke1-1.int.dev.mipc.css.cgipdc.cginet
+ranchrke1-2.int.dev.mipc.css.cgipdc.cginet
+ranchrke1-3.int.dev.mipc.css.cgipdc.cginet
+ranchrke2-1.int.dev.mipc.css.cgipdc.cginet
+ranchrke2-2.int.dev.mipc.css.cgipdc.cginet
+ranchrke2-3.int.dev.mipc.css.cgipdc.cginet
+ranchrke1-1.ext.dev.mipc.css.cgipdc.cginet
+ranchrke1-2.ext.dev.mipc.css.cgipdc.cginet
+ranchrke1-3.ext.dev.mipc.css.cgipdc.cginet
+ranchrke2-1.ext.dev.mipc.css.cgipdc.cginet
+ranchrke2-2.ext.dev.mipc.css.cgipdc.cginet
+ranchrke2-3.ext.dev.mipc.css.cgipdc.cginet
+not harbor-feature.mipc.css.cgipdc.cginet
