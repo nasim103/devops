@@ -17,12 +17,11 @@ rm -rf ansible-role-rhel8-cis || true
 export GIT_SSL_NO_VERIFY=true
 
 # roncis 
-#git clone --depth 1 -b devel https://packer:glpat-ao9Bzh8yp_vwp-_QY1MP@gitlab.css.cgipdc.cginet/kubernetes-automation/rhel8-cis.git
-#git clone --depth 1 -b main https://packer:glpat-3WPwmjNtPEUbkEDQMLfB@gitlab.css.cgipdc.cginet/unix-iac/ron_rhel8-cis.git
+
 
 #gtocis # leave on develop always
-#git clone --depth 1 -b develop https://packer:glpat-DWEbxB8_8-1ZJvkZz1ze@gitlab.css.cgipdc.cginet/unix-iac/cis-gto-rhel.git
-git clone --depth 1 -b Develop https://packer:glpat-CuENsyyM_Xh3rYgyS5aU@gitlab.css.cgipdc.cginet/unix-iac/cis/public/ansible-role-rhel8-cis.git
+
+
 
 cd ansible-role-rhel8-cis || exit
 
