@@ -1,0 +1,147 @@
+##################################################################################
+# Credentials
+##################################################################################
+
+provider "vsphere" {
+  vsphere_server       = var.vsphere_server
+  user                 = var.vsphere_username
+  password             = var.vsphere_password
+  allow_unverified_ssl = var.vsphere_insecure
+}
+
+
+##################################################################################
+# vSphere Settings
+##################################################################################
+
+data "vsphere_datacenter" "datacenter" {
+  name = var.vsphere_datacenter
+}
+
+data "vsphere_network" "network" {
+  name          = var.vsphere_network
+  datacenter_id = data.vsphere_datacenter.datacenter.id
+}
+
+data "vsphere_compute_cluster" "cluster" {
+  name          = var.vsphere_cluster
+  datacenter_id = data.vsphere_datacenter.datacenter.id
+}
+
+data "vsphere_resource_pool" "pool" {
+  name          = format("%s%s", data.vsphere_compute_cluster.cluster.name, "/Resources")
+  datacenter_id = data.vsphere_datacenter.datacenter.id
+}
+
+data "vsphere_datastore" "datastore" {
+  name          = var.vsphere_datastore
+  datacenter_id = data.vsphere_datacenter.datacenter.id
+}
+
+##################################################################################
+# Content Library
+##################################################################################
+
+data "vsphere_content_library" "library" {
+  name = var.vsphere_content_library
+}
+
+data "vsphere_content_library_item" "item" {
+  name       = var.vsphere_content_library_item
+  type       = "ovf"
+  library_id = data.vsphere_content_library.library.id
+}
+
+
+##################################################################################
+# Virtual Machine Settings
+##################################################################################
+
+# data "vsphere_virtual_machine" "template" {
+#  name          = var.vsphere_template
+#  datacenter_id = data.vsphere_datacenter.datacenter.id
+# }
+
+resource "vsphere_virtual_machine" "vm" {
+
+  name                    = var.vm_name
+  folder                  = var.vsphere_folder
+  num_cpus                = var.vm_cpus
+  num_cores_per_socket    = var.num_cores_per_socket
+  cpu_hot_add_enabled     = var.cpu_hot_add_enabled
+  memory_hot_add_enabled  = var.memory_hot_add_enabled
+  memory                  = var.vm_memory
+  firmware                = var.vm_firmware
+  efi_secure_boot_enabled = var.vm_efi_secure_boot_enabled
+  guest_id                = "rhel8_64Guest"
+  datastore_id            = data.vsphere_datastore.datastore.id
+  resource_pool_id        = data.vsphere_resource_pool.pool.id
+  annotation           = var.vm_annotation
+  # scsi_controller_count = 2
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
+  disk {
+  #  label            = "disk0"
+    size             = var.disk_01_size
+    eagerly_scrub    = false
+    thin_provisioned = false
+  }
+
+  # #####second disk Test
+  # disk {
+  #  label            = "disk1"
+  #  label = "${var.vm_name}-${count.index + 2}-disk"
+  #  size             = "100"
+  #  eagerly_scrub    = false
+  #  thin_provisioned = true
+  #  unit_number = "2"
+  #}
+
+##################################################################################
+# Virtual Machine Clone from Template Settings
+##################################################################################
+
+  clone {
+    template_uuid = data.vsphere_content_library_item.item.id
+    customize {
+      linux_options {
+      host_name = var.vm_hostname
+        domain    = var.vm_domain
+      }
+      network_interface {
+       ipv4_address = var.vm_ipv4_address
+
+        ipv4_netmask = var.vm_ipv4_netmask
+      }
+
+      ipv4_gateway    = var.vm_ipv4_gateway
+      dns_suffix_list = var.vm_dns_suffix_list
+      dns_server_list = var.vm_dns_server_list
+    }
+  }
+  extra_config = {
+    "disk.enableUUID"          = "TRUE"
+  }
+  lifecycle {
+    ignore_changes = [
+      clone[0].template_uuid,
+    ]
+  }
+
+ # provisioner "local-exec" {
+ #   command = "echo 'Oph0Du4On7Haf9Ve1Jo6Ry0' | sudo realm leave --remove --user=svc_adjoin css.cgipdc.cginet || true"
+ #   interpreter = ["/bin/bash", "-c"]
+ # }
+
+ # provisioner "local-exec" {
+ #   command = "echo 'Oph0Du4On7Haf9Ve1Jo6Ry0'| sudo realm join --user=svc_adjoin --computer-ou='OU=IaC,OU=Unix,OU=Tier 1,OU=Staff,OU=MGMT,DC=css,DC=cgipdc,DC=cginet' css.cgipdc.cginet || true"
+ #   interpreter = ["/bin/bash", "-c"]
+ # }
+
+ # provisioner "local-exec" {
+ #   command = "sudo realm permit svc_unixiac@CSS.CGIPDC.CGINET"
+ #   interpreter = ["/bin/bash", "-c"]
+ # }
+
+}
