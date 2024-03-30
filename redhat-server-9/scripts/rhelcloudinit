@@ -1,0 +1,79 @@
+#cloud-config
+rh_subscription:
+  username: keggeronald
+  password: JustInT1m3
+  auto-attach: True
+  service-level: self-support
+runcmd:
+  - echo 10.0.0.150 rancherrke.kegge.lab >> /etc/hosts
+network:
+  version: 2
+  ethernets:
+    ens192:
+      dhcp4: true #true to use dhcp
+      nameservers:
+        addresses:
+          - 10.0.0.200 # Set DNS ip address here
+
+#cloud-config
+rh_subscription:
+  username: keggeronald
+  password: JustInT1m3
+  auto-attach: True
+  service-level: self-support
+runcmd:
+  - echo 10.0.0.150 rancherrke.kegge.lab >> /etc/hosts
+network:
+  version: 2
+  ethernets:
+    nics:
+      match:
+        name: ens*
+      dhcp4: true #true to use dhcp
+      nameservers:
+        addresses:
+          - 10.0.0.200 # Set DNS ip address here
+
+
+#Example 2
+instance-id: cloud-vm
+local-hostname: cloud-vm
+network:
+  version: 2
+  ethernets:
+    nics:
+      match:
+        name: ens*
+      dhcp4: yes      
+
+
+
+#Example#cloud-config
+write_files:
+  - path: /root/test.sh
+    content: |
+        #!/bin/bash
+        vmtoolsd --cmd 'info-get guestinfo.ovfEnv' > /tmp/ovfenv
+        IPAddress=$(sed -n 's/.*Property oe:key="guestinfo.interface.0.ip.0.address" oe:value="\([^"]*\).*/\1/p' /tmp/ovfenv)
+        SubnetMask=$(sed -n 's/.*Property oe:key="guestinfo.interface.0.ip.0.netmask" oe:value="\([^"]*\).*/\1/p' /tmp/ovfenv)
+        Gateway=$(sed -n 's/.*Property oe:key="guestinfo.interface.0.route.0.gateway" oe:value="\([^"]*\).*/\1/p' /tmp/ovfenv)
+        DNS=$(sed -n 's/.*Property oe:key="guestinfo.dns.servers" oe:value="\([^"]*\).*/\1/p' /tmp/ovfenv)
+ 
+        cat > /etc/netplan/01-netcfg.yaml <<EOF
+        network:
+          version: 2
+          renderer: networkd
+          ethernets:
+            nics:
+              match:
+                name: ens*
+              addresses: 
+                - $IPAddress/20
+              gateway4: $Gateway
+              nameservers:
+                addresses : [$DNS]
+        EOF
+ 
+        sudo netplan apply
+runcmd:
+  - bash /root/test.sh
