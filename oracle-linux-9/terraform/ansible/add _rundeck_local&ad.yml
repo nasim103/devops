@@ -1,0 +1,52 @@
+---                                                                                                                                                                                                         
+# This playbook adds a user, and expects to be passed a username variable on the ansible-playbook command line
+- hosts: all
+  become: yes
+  gather_facts: no
+
+
+ tasks:
+ - name: Check for authentication type
+  shell: "echo 'imasecret' | kinit"
+  register: passwordinad_check
+  ignore_errors: yes
+  changed_when: False
+  check_mode: no
+
+- block:
+  - name: Add Linux user account svc_unixiac AD
+    user:
+      name: "svc_unixiac"
+      comment: "svc_unixiac ad user"
+      uid: "~"
+      groups: "wheel"
+      group: ""
+      shell: "/bin/bash"
+      home: "/home/svc_unixiac"
+      password: PASSWORDINAD
+      createhome: yes
+    become: true
+    become_user: root
+
+  # Needed until we can use the latest version of Ansible
+  - name: Make sure AD user's password does not expire
+    command: chage -M -1 svc_unixiac
+    become: true
+    changed_when: yes
+  when: passwordinad_check.rc == 0
+
+- block:
+  - name: Add Linux user account svc_unixiac localadmin
+    user:
+      name: "svc_unixiac"
+      comment: "svc_unixiac ad user"
+      uid: "~"
+      groups: "wheel"
+      group: ""
+      shell: "/bin/bash"
+      home: "/home/svc_unixiac"
+      password: "{{ PASSWORD | password_hash('sha512') }}"
+      createhome: yes
+    become: true
+    become_user: root
+  when: passwordinad_check.rc != 0
