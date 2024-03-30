@@ -1,0 +1,38 @@
+#cloud-config
+autoinstall:
+  version: 1
+  early-commands:
+   - systemctl stop ssh # packer tries to connect to the ubuntu installer ssh session
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  identity:
+    hostname: linux-ubuntu-server-22-04-lts-Develop
+    # For password crypt, use: mkpasswd -m sha-512
+    password: '$6$63rbVGKN6Voisl$ydTPOwCHakj6kTSBOXShk2gIlITWAWjEz1SAybBzpIEmGpwWogyvbNtVeBQs5Gjwvpk4GiFye4KJ7x6ppkbBx.'
+    username: cgiadmin
+  proxy: http://10.160.2.6:8080
+  network:
+    network:
+      version: 2
+      ethernets:
+        ens192:
+          dhcp4: false
+          addresses: [10.106.68.120/24]
+          gateway4: 10.106.68.1
+          nameservers:
+            addresses: [10.0.3.72 ,10.0.3.72 ]
+            search: [css.cgipdc.cginet]
+          dhcp-identifier: mac
+  late-commands:
+    # allow ubuntu user to sudo with no pwd
+    - "echo 'cgiadmin ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/cgiadmin"
+    - "chmod 440 /target/etc/sudoers.d/cgiadmin"
+    # use mac for dhcp client identifier - stops different ip being allocated after each reboot
+   # - sed -i 's/^#*\(send dhcp-client-identifier\).*$/\1 = hardware;/' /target/etc/dhcp/dhclient.conf
+   # - 'sed -i "s/dhcp4: true/&\n      dhcp-identifier: mac/" /target/etc/netplan/00-installer-config.yaml'
+  packages:
+   - open-vm-tools
+  ssh:
+    allow-pw: true
+    install-server: true
