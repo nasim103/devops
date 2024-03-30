@@ -4,7 +4,7 @@ rm -rf ansible-role-rhel9-cis || true
  
 export GIT_SSL_NO_VERIFY=true
 
-git clone --depth 1 -b Develop https://packer:glpat-kmRTmzkVrsqJFnYo8xZv@gitlab.css.cgipdc.cginet/unix-iac/cis/public/ansible-role-rhel9-cis.git
+git clone --depth 1 -b Develop
 
 
 cd ansible-role-rhel9-cis || exit
