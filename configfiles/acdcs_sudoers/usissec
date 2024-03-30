@@ -1,0 +1,2 @@
+#%usissec ALL=(ALL)   ALL
+%usissec  ALL=(ALL)       NOPASSWD: ALL

@@ -1,0 +1,22 @@
+## First rule - delete all
+-D
+
+## Increase the buffers to survive stress events.
+## Make this bigger for busy systems
+-b 8192
+
+## This determine how long to wait in burst of events
+--backlog_wait_time 60000
+
+## Set failure mode to syslog
+-f 1
+
+[root@RHEL8-3-Template-CVE rules.d]# cat auoms.rules
+-w /bin/kmod -p x -k auoms -k kernelmodules
+-w /var/log/audit -p wxa -k audittampering -k auoms
+-w /etc/audit -p wxa -k audittampering -k auoms
+-w /etc/passwd -p x -k auoms -k usergroup
+-w /etc/group -p x -k auoms -k usergroup
+-w /etc/pam.d -p wxa -k auoms -k pam
+-a always,exit -F arch=b32 -S execve,execveat -F key=auoms
+-a always,exit -F arch=b64 -S execve,execveat -F key=auoms

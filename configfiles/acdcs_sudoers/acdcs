@@ -1,0 +1,241 @@
+# ACDCS sudoers file
+# User alias specification
+User_Alias DBA=oracle,%dba
+
+User_Alias PSMAG_VISUDO_USERS=xpullen,nprince,tspinell
+User_Alias PSMAG_ARCH_USERS=xpullen,nprince,tspinell,rchiu,cjohnsto,pmenon,sthikeka,sshanmug,nbansal,agomes,nsivapra,kmurakon,smiranda,taye,dhoye,asinha,smaddipa,lgawkosk2,ukotired,kpatil,mmaredia,sagarwal,vsannamu,jrana,rdash,rsawant,snallapa,spallerl,rgottumu,ytirumal,ppadakan,sselvara,tchen,hlakkann,kkalyanp,brobinso,thenders,vbhat,ktolin,akajjam,sidimada,sjanamad,srachuri,psinghal,mdevendr,squraish,fcombs,cwmarco,arana,msriram,jyagnesw,eburrage,jharlos,ruddaraj,vvattiku,skumar,ssuman,anicholl,hmaranoo,mnance,jayanthp,bmulagal,slekkala,awinata,gdozier,jrichard,manasas,lreith,cleining,smuppava,schintal2,mmooney,dkelone,rkota
+
+User_Alias PSMAG_L2_USERS=drawte,sforan,dpandey,midhunv,pdavila,jvanwink,pparisa,akamath,rremesh,cnice,pyeminen,afonteno
+User_Alias PSMAG_L1_USERS=%psmag
+User_Alias DEVOPS_USERS=svc_achsdevops
+
+User_Alias PSMAG_CLIENT_USERS=tbd
+
+# Cmnd alias specification
+
+Cmnd_Alias    SHELLS=/bin/sh,/bin/ksh,/bin/csh,\
+                     /bin/tcsh,/bin/bash,/bin/zsh,\
+                     /usr/bin/rsh,/usr/bin/ksh
+
+Cmnd_Alias    SU=/bin/su,/usr/bin/sudo
+Cmnd_Alias    VISUDO=/usr/sbin/visudo
+Cmnd_Alias    NOTCMDS=/usr/bin/vim /etc/sudoers, /usr/bin/passwd *, /usr/sbin/visudo,\
+                      /bin/vi /etc/sudoers,\
+                      /bin/vi /etc/sudoers.d/acdcs,\
+                      /bin/vi /var/log/sudolog,\
+                      /usr/sbin/usermod *,\
+                      /usr/sbin/useradd *,\
+                      /usr/sbin/userdel *,\
+                      /bin/mkdir /etc/*,\
+                      /bin/rmdir /etc/*,\
+                      /bin/chmod * /etc/*,\
+                      /bin/chgrp * /etc/*,\
+                      /bin/mv /etc/*,\
+                      /bin/cp /etc/*,\
+                      /bin/mkdir /usr/*,\
+                      /bin/rmdir /usr/*,\
+                      /bin/chmod * /usr/*,\
+                      /bin/chgrp * /usr/*,\
+                      /bin/mv /usr/*,\
+                      /bin/cp /usr/*
+
+Cmnd_Alias    DBA_CMDS=/usr/sbin/snmpd --stop,\
+                       /usr/sbin/snmpd --stop,\
+                       /bin/top,\
+                       /bin/chgrp -R /u*,\
+                       /bin/chgrp /u*,\
+                       /bin/chmod /u*,\
+                       /bin/chown /u*,\
+                       /bin/mkdir /u*,\
+                       /tmp/rootpre.sh,\
+                       /tmp/orainstRoot.sh,\
+                       /bin/mkdir /mnt/PSMAG-DBASoftware/*,\
+                       /bin/rmdir /mnt/PSMAG-DBASoftware/*,\
+                       /bin/chmod * /mnt/PSMAG-DBASoftware/*,\
+                       /bin/cp * /mnt/PSMAG-DBASoftware/*,\
+                       /bin/rm * /mnt/PSMAG-DBASoftware/*,\
+                       /bin/chown * /mnt/PSMAG-DBASoftware/*,\
+                       /u01/app/oracle/product/*/root.sh,\
+                       /bin/view /etc/VRTSvcs/conf/config/*,\
+                       /bin/cat /opt/VRTSvcs/bin/Oracle/*,\
+                       /bin/cat /opt/VRTSvcs/conf/*,\
+                       /bin/cat /opt/VRTSvcs/conf/config/*,\
+                       /bin/vi /advapp/PSMAG/Scripts/DBAScripts/*,\
+                       /bin/mkdir /advapp/PSMAG/Scripts/DBAScripts/*,\
+                       /bin/rmdir /advapp/PSMAG/Scripts/DBAScripts/*,\
+                       /bin/chmod * /advapp/PSMAG/Scripts/DBAScripts/*,\
+                       /bin/chgrp * /advapp/PSMAG/Scripts/DBAScripts/*,\
+                       /bin/cp * /advapp/PSMAG/Scripts/DBAScripts/*,\
+                       /bin/rm * /advapp/PSMAG/Scripts/DBAScripts/*,\
+                       /bin/chown * /advapp/PSMAG/Scripts/DBAScripts/*,\
+                       /u01/app/oracle/oraInventory/orainstRoot.sh,\
+                       /u01/app/oracle/product/*/db_1/root.sh,\
+                       /u01/app/oracle/product/*/client_1/root.sh,\
+                       /mnt/*-DBASoftware/oracle/software/*/client/Disk1/rootpre/rootpre.sh
+
+Cmnd_Alias PSMAG_ORACLE_CMDS=/usr/bin/crontab -l,\
+                       /advapp/PSMAG/Scripts/DBAScripts/dataPumpExportSchemaFromTableList_NONRAC.sh *,\
+                       /advapp/PSMAG/Scripts/DBAScripts/ttsRestoreSchema_NONRAC.sh *,\
+                       /advapp/PSMAG/Scripts/DBAScripts/ttsBackupSchema_NONRAC.sh *,\
+                       /advapp/PSMAG/Scripts/DBAScripts/markTablespacesReadWrite_NONRAC.sh *,\
+                       /usr/bin/nohup /advapp/PSMAG/Scripts/DBAScripts/ttsRestoreSchema_NONRAC.sh *,\
+                       /usr/bin/nohup /advapp/PSMAG/Scripts/DBAScripts/ttsBackupSchema_NONRAC.sh *,\
+                       /usr/bin/cat *
+
+Cmnd_Alias PSMAG_L2_ROOT_CMDS=/usr/bin/find *,\
+                        /bin/less /var/log/sudolog,\
+                        /bin/cat /var/log/sudolog,\
+                        /bin/top
+
+Cmnd_Alias PSMAG_L1_ROOT_CMDS=/bin/chown * /mnt/*,\
+                        /bin/mkdir /mnt/*,\
+                        /bin/rmdir /mnt/*,\
+                        /bin/chmod * /mnt/*,\
+                        /bin/cp * /mnt/*,\
+                        /bin/rm * /mnt/*,\
+                        /bin/cat /etc/sudoers.d/acdcs,\
+                        /bin/vi /excludefrombackup/*,\
+                        /bin/mkdir /excludefrombackup/*,\
+                        /bin/rmdir /excludefrombackup/*,\
+                        /bin/chmod * /excludefrombackup/*,\
+                        /bin/chgrp * /excludefrombackup/*,\
+                        /bin/cp * /excludefrombackup/*,\
+                        /bin/rm * /excludefrombackup/*,\
+                        /bin/chown * /excludefrombackup/*,\
+                        /advapp/PSMAG/Scripts/UserInfo/userInfo.sh,\
+                        /advapp/*/VLSEnv/*/VLS/bin/stopServer.sh,\
+                        /advapp/*/VLSEnv/*/VLS/bin/startServer.sh,\
+                        /advapp/PSMAG/Scripts/psmagWrapper*.sh /advapp/PSMAG/Scripts/Bounce/killVLS.sh,\
+                        /advapp/CGIAPPS/jobscheduler_agent/bin/jobscheduler_agent_*,\
+                        /bin/pwsh * /advapp/PSMAG/Scripts/JSExecution/runJSJobChain.ps1 *,\
+                        /advapp/PSMAG/Scripts/psmagWrapper*.sh /advapp/PSMAG/Scripts/DailyOps/*,\
+                        /sbin/lsof /advapp/*,\
+                        /sbin/lsof /advapp/ * ,\
+                        /usr/bin/dsmc q ba *,\
+                        /usr/bin/crontab -e,\
+                        /bin/cat /etc/sudoers,\
+                        /bin/systemctl * grok-exporter.service,\
+                        /bin/systemctl * grok-exporter,\
+                        /bin/systemctl * node-exporter.service,\
+                        /bin/systemctl * node-exporter,\
+                        /bin/systemctl * process-script.timer,\
+                        /bin/systemctl * pushgateway.service,\
+                        /bin/systemctl * pushgateway,\
+                        /bin/systemctl * oracle-exporter,\
+                        /bin/systemctl * oracle-exporter.service
+
+
+Cmnd_Alias PSMAG_CLIENT_ROOT_CMDS=/bin/vi /advapp/*,\
+        /bin/mkdir /advapp/*,\
+        /bin/rmdir /advapp/*,\
+        /bin/chmod * /advapp/*,\
+        /bin/chgrp * /advapp/*,\
+        /bin/chown * /advapp/*,\
+        /bin/mv * /advapp/*,\
+        /bin/cp * /advapp/*,\
+        /bin/rm * /advapp/*,\
+        /bin/rm /advapp/*,\
+        /bin/tar * /advapp/*,\
+        /bin/gzip * /advapp/*,\
+        /bin/gzip /advapp/*,\
+        /bin/gunzip * /advapp/*,\
+        /bin/gunzip /advapp/*,\
+        /bin/vi /AMSROOT/*,\
+        /bin/mkdir /AMSROOT/*,\
+        /bin/rmdir /AMSROOT/*,\
+        /bin/chmod * /AMSROOT/*,\
+        /bin/chgrp * /AMSROOT/*,\
+        /bin/chown * /AMSROOT/*,\
+        /bin/mv * /AMSROOT/*,\
+        /bin/cp * /AMSROOT/*,\
+        /bin/rm * /AMSROOT/*,\
+        /bin/tar * /AMSROOT/*,\
+        /bin/gzip * /AMSROOT/*,\
+        /bin/gunzip * /AMSROOT/*,\
+        /bin/grep *,\
+        /usr/bin/du *,\
+        /bin/ls *,\
+        /bin/df *,\
+        /usr/bin/diff *,\
+        /usr/X11R6/bin/mwm *,\
+        /advapp/*/VLSEnv/*/VLS/bin/AMSVLSConsoleEJB.sh,\
+        /advapp/*/VLSEnv/*/VLS/bin/*Server.sh *,\
+        /advapp/CGIJBOSS/JBOSSEnv/*/VLS/bin/start*.sh *,\
+        /advapp/CGIAPPS/EAP-6.4.0/*/httpd/sbin/apachectl *,\
+        /advapp/*/ABIEnv/*/ABI/bin/*Server.sh *,\
+        /advapp/PSMAG/Scripts/Bounce/bounceVls.sh *,\
+        /advapp/PSMAG/Scripts/Bounce/stopVls.sh *,\
+        /advapp/PSMAG/Scripts/Bounce/startVls.sh *,\
+        /advapp/PSMAG/Scripts/Bounce/stopHTTP.sh *,\
+        /advapp/PSMAG/Scripts/Bounce/startHTTP.sh *,\
+        /advapp/PSMAG/Scripts/Bounce/stopWebSphere.sh *,\
+        /advapp/PSMAG/Scripts/Bounce/startWebSphere.sh *,\
+        /advapp/PSMAG/Migration/Scripts/migrPrepListing.pl
+
+Cmnd_Alias DEVOPS_ROOT_CMDS=/bin/env,\
+        /bin/mkdir /advapp/*,\
+        /bin/chmod * /advapp/*,\
+        /bin/chown * /advapp/*,\
+        /bin/cp * /advapp/*,\
+        /bin/sh * echo *,\
+        /bin/rm * /advapp/*,\
+        /bin/tar * /advapp/*,\
+        /bin/gzip * /advapp/*,\
+        /bin/mkdir /AMSROOT/*,\
+        /bin/chmod * /AMSROOT/*,\
+        /bin/chown * /AMSROOT/*,\
+        /bin/cp * /AMSROOT/*,\
+        /bin/tar * /AMSROOT/*,\
+        /bin/gzip * /AMSROOT/*
+
+# Defaults specification
+Defaults     logfile=/var/log/sudolog
+
+# User privilege specification
+root            ALL=(ALL) ALL
+%cgitier1,%cgilvl1,%cgigratis ALL=(ALL) NOPASSWD: ALL
+%cgitempr                             ALL=(root) ALL, !SHELLS, !SU
+DBA             ALL=(oracle) ALL, !SHELLS, !SU, !NOTCMDS
+#DBA             ALL=(root) DBA_CMDS, !SHELLS, !SU, !NOTCMDS,/bin/su - oracle
+DBA             ALL=(root) DBA_CMDS, !SHELLS, SU, !NOTCMDS,/bin/su - oracle
+
+# PSMAG User Privileges
+PSMAG_CLIENT_USERS ALL=(root) PSMAG_CLIENT_ROOT_CMDS, !SHELLS, !SU, !NOTCMDS, !VISUDO
+PSMAG_CLIENT_USERS ALL=(advadmin) ALL, !SHELLS, !SU, !NOTCMDS, !VISUDO
+
+PSMAG_L1_USERS     ALL=(root) PSMAG_CLIENT_ROOT_CMDS, PSMAG_L1_ROOT_CMDS, !SHELLS, !SU, !NOTCMDS, !VISUDO
+PSMAG_L1_USERS     ALL=(svc_achsdevops) DEVOPS_ROOT_CMDS, !SHELLS, !SU, !NOTCMDS, !VISUDO
+PSMAG_L1_USERS     ALL=(advadmin) ALL, !SHELLS, !SU, !NOTCMDS, !VISUDO
+PSMAG_L1_USERS     ALL=(oracle) PSMAG_ORACLE_CMDS, !SHELLS, !SU, !NOTCMDS, !VISUDO
+
+PSMAG_L2_USERS     ALL=(root) PSMAG_L2_ROOT_CMDS, !SHELLS, !SU, !NOTCMDS, !VISUDO
+
+PSMAG_ARCH_USERS   ALL=(root) ALL, !SHELLS, !SU, !NOTCMDS, !VISUDO
+PSMAG_ARCH_USERS    ALL=(oracle) ALL, !SHELLS, !SU, !NOTCMDS
+# Password change/set ability for non-shell FTP-only userids
+PSMAG_ARCH_USERS   ALL=(root) NOEXEC: /usr/bin/passwd toprdfin, /usr/bin/passwd toprdvss, \
+/usr/bin/passwd prdcatup, /usr/bin/passwd prdcatxf, \
+/usr/bin/passwd toma1fin, /usr/bin/passwd toma1vss, \
+/usr/bin/passwd ma1catup, /usr/bin/passwd ma1catxf, \
+/usr/bin/passwd tosh1fin, /usr/bin/passwd tosh1vss, \
+/usr/bin/passwd sh1catup, /usr/bin/passwd sh1catxf, \
+/usr/bin/passwd tosh2fin, /usr/bin/passwd tosh2vss, \
+/usr/bin/passwd sh2catup, /usr/bin/passwd sh2catxf
+
+PSMAG_L2_USERS   ALL=(root) NOEXEC: /usr/bin/passwd toprdfin, /usr/bin/passwd toprdvss, \
+/usr/bin/passwd prdcatup, /usr/bin/passwd prdcatxf, \
+/usr/bin/passwd toma1fin, /usr/bin/passwd toma1vss, \
+/usr/bin/passwd ma1catup, /usr/bin/passwd ma1catxf, \
+/usr/bin/passwd tosh1fin, /usr/bin/passwd tosh1vss, \
+/usr/bin/passwd sh1catup, /usr/bin/passwd sh1catxf, \
+/usr/bin/passwd tosh2fin, /usr/bin/passwd tosh2vss, \
+/usr/bin/passwd sh2catup, /usr/bin/passwd sh2catxf
+
+PSMAG_VISUDO_USERS ALL=(root) VISUDO
+
+#IAP Account updates
+svc_IAPPRD ALL=(root) NOPASSWD: PSMAG_CLIENT_ROOT_CMDS, PSMAG_L1_ROOT_CMDS, PSMAG_L2_ROOT_CMDS, !SHELLS, !SU, !NOTCMDS, !VISUDO
+svc_IAPPRD ALL=(advadmin) NOPASSWD: ALL, !SHELLS, !SU, !NOTCMDS, !VISUDO
+svc_IAPPRD ALL=(oracle) NOPASSWD: PSMAG_ORACLE_CMDS, !SHELLS, !SU, !NOTCMDS, !VISUDO
+
+DEVOPS_USERS       ALL=(root)  !SHELLS, DEVOPS_ROOT_CMDS, !SU, !NOTCMDS, !VISUDO
