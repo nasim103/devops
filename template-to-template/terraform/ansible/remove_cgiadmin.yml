@@ -1,0 +1,44 @@
+---                                                                                                                                                                                                         
+# This playbook adds a user, and expects to be passed a username variable on the ansible-playbook command line
+- hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+  
+### Pause for a couple minutes to let the VM's we are building think about its actions  ###
+#    - name: Pause for a couple minutes to let the VM we are building think about its actions 
+#      ansible.builtin.pause:
+#       minutes: 2
+#      tags: 2-minute-timeout
+
+### Tell the vms not to worry, that every little thing is gonna be all right. ###
+    - name: Tell the vms not to worry, that every little thing is gonna be all right.
+      shell: "echo 'Dont worry about a thing, Cause every little thing gonna be all right.' || true"
+      tags: everythings-alright
+
+### Remove cgiadmin from systems  ###
+    - name: Remove cgiadmin from systems
+      ansible.builtin.user:
+        name: cgiadmin
+        remove: yes
+        state: absent
+      tags: user-setup
+
+### Ensure /etc/sudoers.d/users file exists  ### 
+    - name: Ensure /etc/sudoers.d/users file exists
+      copy:
+        content: ""
+        dest: /etc/sudoers.d/users
+        force: no
+        group: sys 
+        owner: root
+        mode: 0555
+
+### Remove cgiadmin access to passwordless sudo  ###    
+    - name: Remove cgiadmin access to passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers.d/users
+        state: absent
+        line: 'cgiadmin ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
