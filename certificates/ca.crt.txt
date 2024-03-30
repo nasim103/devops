@@ -1,0 +1,123 @@
+C:\Users\ronald.kegge\Documents\MIPC\Certs>certutil -dump ca.crt
+PKCS7 Message:
+  CMSG_SIGNED(2)
+  CMSG_SIGNED_DATA_PKCS_1_5_VERSION(1)
+  Content Type: 1.2.840.113549.1.7.1 PKCS 7 Data
+
+No PKCS7 Message Content
+
+No Signer
+No Recipient
+
+Certificates:
+================ Begin Nesting Level 1 ================
+Element 0:
+X509 Certificate:
+Version: 3
+Serial Number: 19e3cd9b02e8889c400bc9d9313ea8bc
+Signature Algorithm:
+    Algorithm ObjectId: 1.2.840.113549.1.1.11 sha256RSA
+    Algorithm Parameters:
+    05 00
+Issuer:
+    CN=PHX-CSS-CA-RT-CA
+    DC=css
+    DC=cgipdc
+    DC=cginet
+  Name Hash(sha1): cb19e9472dbb7096dc9b19ab39a49b148c6091e9
+  Name Hash(md5): 1f8ffc970a203615572885092894af72
+
+ NotBefore: 8/20/2016 9:42 PM
+ NotAfter: 8/21/2023 9:52 PM
+
+Subject:
+    CN=PHX-CSS-CA-RT-CA
+    DC=css
+    DC=cgipdc
+    DC=cginet
+  Name Hash(sha1): cb19e9472dbb7096dc9b19ab39a49b148c6091e9
+  Name Hash(md5): 1f8ffc970a203615572885092894af72
+
+Public Key Algorithm:
+    Algorithm ObjectId: 1.2.840.113549.1.1.1 RSA
+    Algorithm Parameters:
+    05 00
+Public Key Length: 2048 bits
+Public Key: UnusedBits = 0
+    0000  30 82 01 0a 02 82 01 01  00 d0 0e 7f a3 0b b1 91
+    0010  e8 1e 81 25 e3 df 55 3e  99 ec ed e6 1e 47 ce 19
+    0020  b4 e9 0b 1b a9 0b b0 fd  67 62 38 f8 b1 a8 3b 3a
+    0030  74 36 f4 36 a9 fb 0b 82  a3 2a 79 3c 08 a5 7e ae
+    0040  65 fa 84 04 8b f2 7e 73  5a 56 5d 79 99 b4 59 6c
+    0050  c7 31 57 f1 fe 04 c8 2c  13 c4 0f 43 91 0b cc 1c
+    0060  21 6a 0e f7 1d 06 15 21  0c 3e 68 9d d2 38 e6 3d
+    0070  78 d6 b9 bc 60 67 89 23  70 40 b9 a0 55 b7 f9 eb
+    0080  af 6c d8 91 92 51 24 07  01 88 fb 7b f3 bc 99 43
+    0090  a6 1b 08 df 64 b8 28 e1  56 e4 a4 23 6c d8 6c 15
+    00a0  6f e4 4c bc 77 f9 2d 9d  03 5a 63 3e 4e a1 03 09
+    00b0  88 49 2d eb 2b e9 e7 85  22 b7 8d 03 c7 5f 2d d4
+    00c0  2a 88 1f da 8f 4f 47 27  45 95 d5 61 d1 00 fa 29
+    00d0  78 29 df dc 2d 4c 02 9d  5a 6d 92 61 bf 8c e1 8c
+    00e0  a4 54 0b 68 84 88 e6 ee  38 c6 48 47 0c fb 2f 23
+    00f0  ad 38 13 2a 51 9d d4 db  9f c0 07 d5 a3 02 77 ac
+    0100  1e 70 8b 84 74 8e 8a ac  c3 02 03 01 00 01
+Certificate Extensions: 6
+    1.3.6.1.4.1.311.20.2: Flags = 0, Length = 6
+    Certificate Template Name (Certificate Type)
+        CA
+
+    2.5.29.15: Flags = 1(Critical), Length = 4
+    Key Usage
+        Digital Signature, Certificate Signing, Off-line CRL Signing, CRL Signing (86)
+
+    2.5.29.19: Flags = 1(Critical), Length = 5
+    Basic Constraints
+        Subject Type=CA
+        Path Length Constraint=None
+
+    2.5.29.14: Flags = 0, Length = 16
+    Subject Key Identifier
+        ad fb 68 86 90 ee 8b bd e0 fd e6 f5 fa 30 69 75 33 c7 d7 d6
+
+    1.3.6.1.4.1.311.21.1: Flags = 0, Length = 5
+    CA Version
+        V4.4
+
+    1.3.6.1.4.1.311.21.2: Flags = 0, Length = 16
+    Previous CA Certificate Hash
+        1a 1f 04 38 dc be 11 ad 4e 0a 3c 5b 21 60 31 ee c8 6d 76 9d
+
+Signature Algorithm:
+    Algorithm ObjectId: 1.2.840.113549.1.1.11 sha256RSA
+    Algorithm Parameters:
+    05 00
+Signature: UnusedBits=0
+    0000  38 7a 9e 46 4d 7d f3 31  f4 e0 81 3c d6 af 65 35
+    0010  1c 72 c6 ca 16 6f 4b 34  e8 a5 af e3 dc 86 f9 fd
+    0020  1e a6 97 9f 60 74 24 a4  fe fb 8b 63 d9 a0 dd f7
+    0030  8e 37 94 6d b7 40 a3 f8  9a 47 4d a2 ef 99 1a 72
+    0040  94 0e a8 9b 3a 38 a9 b2  06 55 2e 12 c6 c5 7b 3b
+    0050  a8 0c e1 2c 57 5e 12 2f  49 90 83 4d e1 73 b5 2a
+    0060  68 f5 ff 13 4c 42 8a 23  76 3b 4c a2 ed 54 0d c4
+    0070  71 14 f5 65 ef 63 71 30  c2 88 ef 0f 94 1e af e9
+    0080  af 01 ca ab 4d 83 5f 12  f1 0c 71 df 1d 64 17 90
+    0090  06 a6 90 ab 57 1a aa b9  aa 6b 28 4d e1 23 9f da
+    00a0  06 41 e1 db 49 b7 c6 e1  ea 5d c2 16 db 9b e4 44
+    00b0  c3 89 74 7b 9f b7 98 46  b5 82 bb 24 d5 83 38 7f
+    00c0  45 5b ce d9 49 42 bd 36  00 ba 65 4d d7 5d b9 f6
+    00d0  19 eb f5 f5 95 9b 76 f9  75 dd 30 66 cb 35 81 d5
+    00e0  e4 06 31 3c f8 c3 14 79  73 9c 87 95 2a 7c 2c c7
+    00f0  4a af ea a8 16 39 a1 c9  a2 58 da ac 0c fa 51 2c
+Signature matches Public Key
+Root Certificate: Subject matches Issuer
+Key Id Hash(rfc-sha1): adfb688690ee8bbde0fde6f5fa30697533c7d7d6
+Key Id Hash(sha1): bd3e596b4e1819d50fc094031f205dfc6f0f0f9f
+Key Id Hash(md5): 43b63f70130e1a4383cba38c6bdc17ba
+Key Id Hash(sha256): 8cc2fea3c4f1b341f47b14e571a84f6c776c3a1dce9bd64bd00a573145809b29
+Cert Hash(md5): b85c04b2f23568eb2b93257c52bb0766
+Cert Hash(sha1): ce26c7417a612a8ad0576fb6986aa5473b1f675f
+Cert Hash(sha256): 8e1ef4dc95e7653c089110b148c6b37be1ff596746d0e4e3bd92b995d928be38
+Signature Hash: 9d3a154a249b20696be1f78df3959a5e0e09d4a379e2e1b8ac24f4f9ece3484f
+----------------  End Nesting Level 1  ----------------
+No CRLs
+CertUtil: -dump command completed successfully.
