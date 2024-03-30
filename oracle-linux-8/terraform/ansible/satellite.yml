@@ -1,0 +1,29 @@
+---                                                                                                                                                                                                         
+# the playbook sets up ad auth 
+- hosts: all
+  become_method: sudo
+  become: yes
+  gather_facts: no    
+  #remote_user: ansible
+
+  tasks:
+    - name: Registering with satellite server
+      shell: |
+       subscription-manager register --org=PDC --activationkey=weekly-nprd-rhel8 || true
+      tags: sat1
+  
+    - name: Calling subscription-manager attach --auto
+      shell: subscription-manager attach --auto  || true
+      tags: sat2      
+
+    - name: Enabling standard repo
+      shell: subscription-manager repos --enable=rhel-8-for-x86_64-appstream-rpms
+      tags: sat3
+    
+    - name: Enabling the other standard repos
+      shell: subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms
+      tags: sat4
+  
+    - name: Enabling the satellite-tools repo
+      shell: subscription-manager repos --enable=satellite-tools-6.8-for-rhel-8-x86_64-rpms
+      tags: sat5

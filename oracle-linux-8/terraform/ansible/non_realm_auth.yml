@@ -1,0 +1,171 @@
+---                                                                                                                                                                                                         
+# the playbook sets up ad auth 
+- hosts: all
+  become_user: root
+  become_method: sudo
+  become: yes
+  gather_facts: no    
+  #remote_user: ansible
+  vars: 
+    user: cgiadmin
+
+
+  tasks:
+
+ ### copy pda-preload-master 01 ###
+    - name: copy pda preload
+      copy:
+        src: scripts/pda-preload-master.sh
+        dest:   /tmp
+        follow: no
+      tags: copy-files-01
+
+ ### copy authselect 02 ###
+    - name: copy authselect
+      copy:
+        src: configs/cis-profile.zip
+        dest:   /tmp
+        follow: no
+      tags: copy-files-02
+
+ ### copy krb5 03 ###
+    - name: copy krb5
+      copy:
+        src: configs/krb5.conf
+        dest:   /tmp
+        follow: no
+      tags: copy-files-03
+
+ ### copy sssd.conf  ###
+    - name: copy sssd
+      copy:
+        src: configs/sssd.conf
+        dest:   /tmp
+        follow: no
+      tags: copy-files 01
+
+### leave the CTSS Domain  ###
+    - name: leave CSS Domain
+      shell: "echo 'Oph0Du4On7Haf9Ve1Jo6Ry0' | realm leave --remove --user=svc_adjoin css.cgipdc.cginet || true"
+      tags: leave-domain
+
+### flush old sssd settings   ### 
+    - name: flush old sssd settings
+      shell: |
+       rm -rf /var/lib/sss/db/*
+      tags: sssd-flush
+
+### sssd   ### 
+    - name: sssd prep
+      shell: |
+       rm -rf /etc/sssd/sssd.conf
+       cp /tmp/sssd.conf /etc/sssd/
+       chmod 600 /etc/sssd/sssd.conf
+      tags: sssd
+
+### krb5   ### 
+    - name:  krb5 prep
+      shell: |
+       rm -rf /etc/krb5.conf
+       cp /tmp/krb5.conf /etc/
+       chmod 644 /etc/krb5.conf
+      tags: krb5
+
+### authselect prep   ### 
+    - name:  authselect prep 
+      shell: |
+       cp /tmp/cis-profile.zip /etc/authselect/custom/
+       cd /etc/authselect/custom/
+       unzip /etc/authselect/custom/cis-profile.zip
+      tags: authselect-prep
+
+### sshd crypto policy change   ### 
+    - name: set sshd crypto policy change 
+      shell: |
+       sed -i '$a\CRYPTO_POLICY=' /etc/sysconfig/sshd
+      tags: sshd crypto policy change 
+
+### cis hardening sudo logging  ### 
+    - name: Add users & groups access
+      shell: |
+       echo "Defaults use_pty" > /etc/sudoers.d/cis
+       echo "Defaults logfile="/var/log/sudo.log"" > /etc/sudoers.d/cis
+      tags: cis-hardening-sudo-logging  
+
+### Restart sssd services  ###
+    - name: Restart sssd services
+      shell: |
+        systemctl reset-failed
+        service sssd restart
+      tags: restart-sssd
+
+### Restart sshd services  ###
+    - name: Restart sshd services
+      shell: |
+        service sshd restart
+      tags: restart-sshd
+
+### set authselect   ### 
+    - name: Set authselect Profile
+      shell: |
+       authselect select custom/cis-profile --force
+      tags: authselect
+
+### preload users   ### 
+    - name: Preload users
+      shell: |
+       cd /tmp
+       mv /tmp/pda-preload-master.sh /root/pda-preload-master.sh
+       cd /root
+       chmod +x pda-preload-master.sh
+       ./pda-preload-master.sh
+      tags: preload-users
+
+### enable sssd service  ###
+    - name: Enable sssd service
+      shell: |
+       systemctl enable sssd
+      tags: enable-sshd-onboot
+
+### Create sudoers.d files  ###
+    - name: Create sudoers.d files 
+      shell: |
+        touch /etc/sudoers.d/occops
+        touch /etc/sudoers.d/omsagent
+        touch /etc/sudoers.d/unixadmins
+        touch /etc/sudoers.d/usissec
+        touch /etc/sudoers.d/patchers
+      tags: touch-the-sudoers
+
+### Create sudoers.d files  ###
+    - name: Create sudoers.d files 
+      shell: |
+        touch /etc/sudoers.d/occops
+        touch /etc/sudoers.d/omsagent
+        touch /etc/sudoers.d/unixadmins
+        touch /etc/sudoers.d/usissec
+        touch /etc/sudoers.d/patchers
+        touch /etc/sudoers.d/svc_accounts
+      tags: touch-the-sudoers
+
+### setup and configure sudoers  ### 
+    - name: Add users & groups access
+      shell: |
+       echo 'svc_rundeck ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/svc_accounts
+       echo 'svc_unixiac ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/svc_accounts
+       echo 'svc_forescout ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/svc_accounts
+       echo 'svc_rapid7 ALL=(root) /usr/bin/bash' >> /etc/sudoers.d/svc_accounts
+       echo 'svc_sailpoint ALL=(ALL) ALL' >> /etc/sudoers.d/svc_accounts
+       echo "svc_unixiac ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/svc_accounts
+       echo "%occops ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/occops
+       echo "%patchers ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/patchers
+       echo "%unixadmins ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/unixadmins
+       echo "#%usissec ALL=(ALL) ALL" > /etc/sudoers.d/usissec
+       echo "%usissec ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/usissec
+      tags: setup-sudoers
+
+### Clean tmp   ### 
+#    - name: Clean tmp 
+#      shell: |
+#       rm -rf /tmp
+#      tags: Cleantmp 
